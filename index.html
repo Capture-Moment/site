@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+  CAPTURE MOMENT - Official website (single-file landing page)
+  Slogan: "A photographic moment, captured freely."
+───────────────────────────────────────────────────────────────────────────────
+  FILE MAP:
+    1.  <HEAD>     → SEO, Open Graph, JSON-LD, fonts, Tailwind, styles
+    2.  NAVBAR     → fixed navigation + mobile menu + EN/FR switcher
+    3.  HERO       → home, slogan, main buttons
+    4.  ABOUT      → project presentation + 3 pillars
+    5.  PREVIEW    → software screenshot (asset/home.png)
+    6.  FEATURES   → 6 cards with colored icons
+    7.  GALLERY    → sample photos (Unsplash placeholders)
+    8.  DOWNLOAD   → latest release: Windows / macOS / Linux
+    9.  CONTACT    → form + direct links (email, LinkedIn, GitHub)
+    10. FOOTER     → bottom of the page
+    11. SCRIPTS    → Vanilla JS (mobile menu, navbar, animations, icons,
+                     and the EN/FR translations of every text on the site)
+───────────────────────────────────────────────────────────────────────────────
+  HOW THIS FILE IS ORGANIZED:
+    • Comments marked "EDITABLE" show what you can safely change
+      (texts, links, images) without breaking anything.
+    • Image paths are RELATIVE (asset/...): just put the "asset/" folder
+      next to this index.html file. It works by double-clicking the file
+      AND on GitHub Pages / Vercel / Netlify.
+    • ★ LANGUAGES: the page is written in English by default (good for SEO).
+      The full French version lives in the TRANSLATIONS object at the bottom
+      of the file (section 11). Visitors switch with the EN | FR buttons in
+      the navbar, and their choice is remembered.
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- ═══════════════════════════════════════════════════════
+       1. HEAD - SEO · Social networks · Fonts · Tailwind · Styles
+  ═══════════════════════════════════════════════════════ -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ─── Main SEO (EDITABLE) ─── -->
+  <title>CaptureMoment - Non-destructive photo editing, free &amp; open-source</title>
+  <meta name="description" content="CaptureMoment is a free, open-source non-destructive photo editor: RAW processing, smart cataloging and faithful colors. For Windows, macOS and Linux.">
+  <meta name="keywords" content="CaptureMoment, Capture Moment, photo editing, RAW, free photo software, open source, non-destructive, photo cataloging, Windows, macOS, Linux, Lightroom alternative">
+  <meta name="author" content="Capture Moment">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#07070f">
+
+  <!-- EDITABLE: once the site is online, replace with the final URL (e.g. https://your-site.com/) -->
+  <link rel="canonical" href="https://github.com/Capture-Moment/CaptureMoment">
+
+  <!-- ─── Favicon & Apple icon (files in the asset/ folder) ─── -->
+  <link rel="icon" type="image/png" href="asset/favicon.png">
+  <link rel="apple-touch-icon" href="asset/favicon.png">
+
+  <!-- ─── Open Graph & Twitter Card (preview when the link is shared) ─── -->
+  <meta property="og:site_name" content="Capture Moment">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CaptureMoment - Non-destructive photo editing, free &amp; open-source">
+  <meta property="og:description" content="RAW processing, organized library, faithful colors. Free for Windows, macOS and Linux.">
+  <meta property="og:url" content="https://github.com/Capture-Moment/CaptureMoment">
+  <!-- EDITABLE: put the ABSOLUTE URL of the share image once online (e.g. https://your-site.com/asset/home.jpg) -->
+  <meta property="og:image" content="asset/home.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CaptureMoment - Non-destructive photo editing, free &amp; open-source">
+  <meta name="twitter:description" content="RAW processing, organized library, faithful colors. Free for Windows, macOS and Linux.">
+  <meta name="twitter:image" content="asset/home.jpg">
+
+  <!-- ─── Structured data JSON-LD (Google referencing) ─── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Capture Moment",
+        "url": "https://github.com/Capture-Moment/",
+        "logo": "asset/logo.png",
+        "email": "yacine.benaffane@gmail.com",
+        "sameAs": [
+          "https://github.com/Capture-Moment/",
+          "https://www.linkedin.com/company/capture-moment"
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "CaptureMoment",
+        "url": "https://github.com/Capture-Moment/CaptureMoment",
+        "operatingSystem": "Windows, macOS, Linux",
+        "applicationCategory": "MultimediaApplication",
+        "softwareVersion": "0.1.0",
+        "description": "Free and open-source non-destructive photo editor: RAW processing, smart cataloging and professional color management.",
+        "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+        "author": { "@type": "Organization", "name": "Capture Moment", "url": "https://github.com/Capture-Moment/" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "downloadUrl": [
+          "https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment-win64.exe",
+          "https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment.dmg",
+          "https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment-x86_64.AppImage"
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- ─── Google Fonts: Poppins (headings) + Inter (body) ─── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ─── Tailwind CSS via the official CDN (ONLY CSS dependency) ─── -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    /* Tailwind configuration: custom fonts & colors of the site */
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'Inter', 'ui-sans-serif', 'sans-serif']
+          },
+          colors: {
+            nuit: '#07070f',   /* overall background of the site (deep dark) */
+            carte: '#0d0d1b'   /* background of large cards / panels */
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- ─── Custom styles (Tailwind complements) ─── -->
+  <style>
+    /* Text selection with the site colors */
+    ::selection { background: rgba(99, 102, 241, 0.35); color: #ffffff; }
+
+    /* Custom scrollbar (WebKit browsers) */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #07070f; }
+    ::-webkit-scrollbar-thumb { background: #26264a; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3d3d73; }
+
+    /* Compensates the fixed navbar height when jumping to anchors */
+    html { scroll-padding-top: 96px; }
+
+    /* Decorative grid pattern of the hero */
+    .bg-grille {
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+      background-size: 54px 54px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
+    }
+
+    /* Gradient text (accent words in headings) */
+    .texte-degrade {
+      background: linear-gradient(92deg, #818cf8 0%, #c084fc 55%, #f0abfc 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Navbar: "scrolled" state (class added by the JS at the bottom) */
+    #navbar.scrolled {
+      background: rgba(7, 7, 15, 0.9);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 14px 44px -20px rgba(99, 102, 241, 0.45);
+    }
+
+    /* Soft fade-in of elements while scrolling (.est-visible class added by the JS) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .reveal.est-visible { opacity: 1; transform: none; }
+
+    /* Language switcher: active state of the EN / FR buttons */
+    .lang-btn.active { background: rgba(99, 102, 241, 0.3); color: #ffffff; }
+
+    /* Respects the "reduced motion" system preference */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* Printing / PDF: all content is visible, no animation */
+    @media print {
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+
+  <!-- If JavaScript is disabled: everything stays visible -->
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body class="bg-nuit font-sans text-slate-300 antialiased overflow-x-hidden">
+
+  <!-- Accessibility skip link (keyboard / screen readers) -->
+  <a href="#contenu" data-i18n="a11y.skip" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-indigo-600 focus:px-4 focus:py-2 focus:font-semibold focus:text-white">Skip to content</a>
+
+  <!-- ═══════════════════════════════════════════════════════
+       2. NAVBAR - fixed navigation + mobile menu + EN/FR switcher
+  ═══════════════════════════════════════════════════════ -->
+  <header id="navbar" class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-nuit/70 backdrop-blur-xl transition-all duration-300">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8" aria-label="Main navigation" data-i18n-aria="a11y.nav">
+
+      <!-- ▸ EDITABLE: logo + site name -->
+      <a href="#hero" class="group flex items-center gap-3">
+        <img src="asset/logo.png" alt="Capture Moment logo" width="40" height="40"
+             class="h-9 w-9 rounded-xl object-cover ring-1 ring-white/10 transition group-hover:ring-indigo-500/50 md:h-10 md:w-10"
+             onerror="this.style.display='none'">
+        <span class="font-display text-lg font-semibold tracking-tight text-white md:text-xl">Capture <span class="texte-degrade">Moment</span></span>
+      </a>
+
+      <!-- Links visible on desktop -->
+      <ul class="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
+        <li><a href="#apropos" data-i18n="nav.about" class="transition hover:text-white">About</a></li>
+        <li><a href="#fonctionnalites" data-i18n="nav.features" class="transition hover:text-white">Features</a></li>
+        <li><a href="#galerie" data-i18n="nav.gallery" class="transition hover:text-white">Gallery</a></li>
+        <li><a href="#contact" data-i18n="nav.contact" class="transition hover:text-white">Contact</a></li>
+      </ul>
+
+      <!-- Right side: EN/FR switcher (always visible) + Download button + mobile menu -->
+      <div class="flex items-center gap-2">
+
+        <!-- ── Language switcher (EDITABLE: add or remove languages in section 11) ── -->
+        <div class="flex items-center rounded-xl border border-white/10 bg-white/5 p-1 text-xs font-bold" role="group" aria-label="Language" data-i18n-aria="a11y.lang">
+          <button type="button" class="lang-btn rounded-lg px-2.5 py-1.5 text-slate-400 transition hover:text-white" data-lang="en" aria-label="Switch to English">EN</button>
+          <button type="button" class="lang-btn rounded-lg px-2.5 py-1.5 text-slate-400 transition hover:text-white" data-lang="fr" aria-label="Passer au français">FR</button>
+        </div>
+
+        <!-- "Download" button visible on desktop -->
+        <div class="hidden md:block">
+          <a href="#telecharger" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-indigo-500/45">
+            <i data-lucide="download" class="h-4 w-4"></i>
+            <span data-i18n="nav.download">Download</span>
+          </a>
+        </div>
+
+        <!-- Mobile menu button (hamburger) -->
+        <button id="bouton-menu" type="button"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 md:hidden"
+                aria-expanded="false" aria-controls="menu-mobile" aria-label="Open menu">
+          <i data-lucide="menu" id="icone-ouvrir" class="h-5 w-5"></i>
+          <i data-lucide="x" id="icone-fermer" class="hidden h-5 w-5"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu panel (hidden by default, opened by the JS) -->
+    <div id="menu-mobile" class="hidden border-t border-white/5 bg-nuit/95 backdrop-blur-xl md:hidden">
+      <ul class="space-y-1 px-4 py-4 text-slate-200">
+        <li><a href="#apropos" data-i18n="nav.about" class="block rounded-xl px-4 py-3 transition hover:bg-white/5">About</a></li>
+        <li><a href="#fonctionnalites" data-i18n="nav.features" class="block rounded-xl px-4 py-3 transition hover:bg-white/5">Features</a></li>
+        <li><a href="#galerie" data-i18n="nav.gallery" class="block rounded-xl px-4 py-3 transition hover:bg-white/5">Gallery</a></li>
+        <li><a href="#telecharger" data-i18n="nav.download" class="block rounded-xl px-4 py-3 transition hover:bg-white/5">Download</a></li>
+        <li><a href="#contact" data-i18n="nav.contact" class="block rounded-xl px-4 py-3 transition hover:bg-white/5">Contact</a></li>
+        <li class="pt-2">
+          <a href="#telecharger" class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-500/25">
+            <i data-lucide="download" class="h-4 w-4"></i>
+            <span data-i18n="nav.downloadFree">Download for free</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="contenu">
+
+    <!-- ═══════════════════════════════════════════════════════
+         3. HERO - home, slogan, main buttons
+    ═══════════════════════════════════════════════════════ -->
+    <section id="hero" class="relative overflow-hidden pb-24 pt-32 md:pb-32 md:pt-44">
+      <!-- Decor: colored halos + grid (purely visual) -->
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div class="absolute inset-0 bg-grille"></div>
+        <div class="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-indigo-600/25 blur-3xl"></div>
+        <div class="absolute -top-24 right-0 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl"></div>
+        <div class="absolute left-1/3 top-72 h-72 w-72 rounded-full bg-fuchsia-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <!-- Badge -->
+        <p class="reveal inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5 text-xs font-medium text-indigo-300 md:text-sm">
+          <i data-lucide="sparkles" class="h-4 w-4"></i>
+          <span data-i18n="hero.badge">Free &amp; open-source</span>
+        </p>
+
+        <!-- ▸ EDITABLE: main title -->
+        <h1 class="reveal mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+          <span data-i18n="hero.title1">Edit your photos,</span><br class="hidden sm:block">
+          <span class="texte-degrade" data-i18n="hero.title2">without ever altering them.</span>
+        </h1>
+
+        <!-- ▸ EDITABLE: introduction sentence -->
+        <p class="reveal mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg" data-i18n="hero.intro">
+          CaptureMoment is a free, open-source photo editing and developing app. Your original
+          files stay untouched, your colors stay true and your library stays organized, simply
+          and effortlessly, on Windows, macOS and Linux.
+        </p>
+
+        <!-- Main action buttons -->
+        <div class="reveal mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href="#telecharger" class="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-1 hover:from-indigo-500 hover:to-violet-500 hover:shadow-2xl hover:shadow-indigo-500/50 sm:w-auto">
+            <i data-lucide="download" class="h-5 w-5"></i>
+            <span data-i18n="nav.downloadFree">Download for free</span>
+          </a>
+          <!-- ▸ EDITABLE: link to the GitHub repository -->
+          <a href="https://github.com/Capture-Moment/CaptureMoment" target="_blank" rel="noopener noreferrer" class="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl border border-white/15 bg-white/5 px-7 py-3.5 text-base font-semibold text-slate-200 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/50 hover:bg-white/10 hover:text-white sm:w-auto">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            <span data-i18n="hero.ctaGithub">Explore on GitHub</span>
+          </a>
+        </div>
+
+        <!-- ▸ Official slogan (branding, same in both languages) -->
+        <p class="reveal mt-8 text-sm italic text-slate-500 md:text-base">&ldquo;A photographic moment, captured freely.&rdquo;</p>
+
+      </div>
+
+      <!-- Scroll invitation arrow -->
+      <a href="#apropos" class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-slate-600 transition hover:text-indigo-400 md:block" aria-label="Scroll to the next section">
+        <i data-lucide="chevron-down" class="h-6 w-6 animate-bounce"></i>
+      </a>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         4. ABOUT - project presentation + 3 pillars
+    ═══════════════════════════════════════════════════════ -->
+    <section id="apropos" class="relative py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400" data-i18n="about.eyebrow">About the project</p>
+          <!-- ▸ EDITABLE: section title -->
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="about.title">
+            A free alternative, built by passionate photographers
+          </h2>
+          <!-- ▸ EDITABLE: presentation text -->
+          <p class="reveal mt-6 leading-relaxed text-slate-400 md:text-lg" data-i18n="about.text">
+            Developed in the open and released under the GPLv3 license, the software suits
+            passionate photographers and professionals alike: open your RAW files, let the
+            catalog keep your library organized and enjoy truly faithful colors. Simple to
+            use, powerful under the hood.
+          </p>
+        </div>
+
+        <!-- The 3 pillars of the project -->
+        <div class="mt-14 grid gap-5 sm:gap-6 md:grid-cols-3">
+
+          <!-- Pillar 1 - Non-destructive -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="shield-check" class="h-6 w-6"></i>
+            </div>
+            <!-- ▸ EDITABLE: pillar text -->
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="about.p1t">Non-destructive</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="about.p1d">
+              The original is never touched. Every edit stays reversible at any moment.
+            </p>
+          </article>
+
+          <!-- Pillar 2 - Fast -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="zap" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="about.p2t">Fast &amp; fluid</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="about.p2d">
+              Processing is accelerated by your own hardware for near-instant results,
+              even on very large photos.
+            </p>
+          </article>
+
+          <!-- Pillar 3 - Free -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-fuchsia-500/40 hover:shadow-2xl hover:shadow-fuchsia-500/10">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-fuchsia-500/10 text-fuchsia-400 ring-1 ring-fuchsia-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="heart-handshake" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="about.p3t">Free &amp; open</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="about.p3d">
+              Open-source under the GPLv3 license: use it without limits, with no
+              subscription and no ads.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         5. PREVIEW - software screenshot (asset/home.png)
+    ═══════════════════════════════════════════════════════ -->
+    <section id="apercu" class="relative overflow-hidden py-20 md:py-28">
+      <!-- Decorative halo -->
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div class="absolute left-1/2 top-1/3 h-80 w-[42rem] max-w-full -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400" data-i18n="preview.eyebrow">Preview</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="preview.title">
+            A clean interface that gives your images all the room
+          </h2>
+          <p class="reveal mt-5 leading-relaxed text-slate-400 md:text-lg" data-i18n="preview.sub">
+            Your photos front and center, your tools within reach.
+          </p>
+        </div>
+
+        <!-- ▸ EDITABLE: software screenshot (replace asset/home.jpg with your file) -->
+        <figure class="reveal mt-12 md:mt-16">
+          <div class="group relative rounded-3xl border border-white/10 bg-carte p-2 shadow-2xl shadow-indigo-500/20 transition-all duration-500 hover:shadow-indigo-500/40 md:p-3">
+            <img src="asset/home.jpg"
+                 alt="Screenshot of the CaptureMoment main interface" data-i18n-alt="preview.alt"
+                 loading="lazy"
+                 class="w-full rounded-2xl"
+                 onerror="this.classList.add('hidden');document.getElementById('placeholder-apercu').classList.replace('hidden','flex')">
+            <!-- Placeholder shown only if asset/home.png is missing -->
+            <div id="placeholder-apercu" class="hidden aspect-[16/9] w-full items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600/15 via-carte to-fuchsia-600/10 text-slate-500">
+              <span class="text-sm" data-i18n="preview.placeholder">Put your screenshot here: asset/home.jpg</span>
+            </div>
+          </div>
+          <!-- ▸ EDITABLE: screenshot caption -->
+          <figcaption class="mt-5 text-center text-sm text-slate-500" data-i18n="preview.caption">
+            The main window of CaptureMoment.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         6. FEATURES - 6 cards with colored icons
+    ═══════════════════════════════════════════════════════ -->
+    <section id="fonctionnalites" class="relative py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400" data-i18n="feat.eyebrow">Features</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="feat.title">
+            Everything you need, nothing complicated
+          </h2>
+          <p class="reveal mt-5 leading-relaxed text-slate-400 md:text-lg" data-i18n="feat.sub">
+            Powerful tools, presented simply.
+          </p>
+        </div>
+
+        <!-- Features grid (EDITABLE: texts + Lucide icons) -->
+        <div class="mt-14 grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+
+          <!-- 1. RAW -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="camera" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c1t">Universal RAW files</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c1d">
+              Open files from all the major brands directly: Canon, Nikon, Sony, Fujifilm
+              and many more, with no conversion step.
+            </p>
+          </article>
+
+          <!-- 2. Non-destructive -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="sliders-horizontal" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c2t">100% reversible editing</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c2d">
+              Brightness, contrast, sharpness, noise reduction… Adjust freely:
+              your original never changes.
+            </p>
+          </article>
+
+          <!-- 3. Library -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-sky-500/40 hover:shadow-2xl hover:shadow-sky-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="folder-search" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c3t">Library</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c3d">
+              Your photos gathered and neatly organized, all in one place.
+            </p>
+          </article>
+
+          <!-- 4. Colors -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="palette" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c4t">Faithful colors</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c4d">
+              Professional-grade color management, for consistent rendering
+              from screen to print.
+            </p>
+          </article>
+
+          <!-- 5. Interface -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="sparkles" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c5t">Modern interface</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c5d">
+              Smooth and elegant, it steps aside for what matters: your photos.
+            </p>
+          </article>
+
+          <!-- 6. Multi-platform -->
+          <article class="reveal group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-fuchsia-500/40 hover:shadow-2xl hover:shadow-fuchsia-500/10 md:p-7">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-fuchsia-500/10 text-fuchsia-400 ring-1 ring-fuchsia-500/20 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="monitor-smartphone" class="h-6 w-6"></i>
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-white" data-i18n="feat.c6t">With you everywhere</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-400" data-i18n="feat.c6d">
+              Windows, macOS and Linux today. A mobile version is on the way.
+            </p>
+          </article>
+        </div>
+
+        <!-- Link to the project (EDITABLE) -->
+        <p class="reveal mt-10 text-center text-sm text-slate-500">
+          <span data-i18n="feat.evolving">The project keeps evolving:</span>
+          <a href="https://github.com/Capture-Moment/CaptureMoment" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-medium text-indigo-400 transition hover:text-indigo-300">
+            <span data-i18n="feat.evolvingLink">follow the news on GitHub</span> <i data-lucide="external-link" class="h-4 w-4"></i>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         7. GALLERY - sample photos (Unsplash placeholders)
+    ═══════════════════════════════════════════════════════ -->
+    <section id="galerie" class="relative py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400" data-i18n="gal.eyebrow">Gallery</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="gal.title">
+            Moments captured… and revealed
+          </h2>
+          <p class="reveal mt-5 leading-relaxed text-slate-400 md:text-lg" data-i18n="gal.sub">
+            Because in the end, it all starts with a beautiful moment.
+          </p>
+        </div>
+
+        <!-- ▸ EDITABLE: replace the Unsplash images with your own samples
+             (e.g. src="asset/sample1.jpg"). Keep the classes for the hover effect. -->
+        <div class="mt-14 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3">
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Mountains at dusk" data-i18n-alt="gal.a1" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c1">Peaks at dusk</span>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Forest bathed in light" data-i18n-alt="gal.a2" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c2">Sunlit woods</span>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Hills in the morning mist" data-i18n-alt="gal.a3" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c3">Dawn mists</span>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Camera resting on a desk" data-i18n-alt="gal.a4" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c4">The photographer's desk</span>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Photographer out in the street" data-i18n-alt="gal.a5" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c5">Urban moments</span>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10">
+            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&amp;fit=crop&amp;w=900&amp;q=80"
+                 alt="Moments shared with friends" data-i18n-alt="gal.a6" loading="lazy"
+                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+            <figcaption class="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/0 to-black/0 p-4 opacity-0 transition duration-300 group-hover:opacity-100">
+              <span class="text-sm font-medium text-white" data-i18n="gal.c6">Shared moments</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         8. DOWNLOAD - latest GitHub release (Windows / macOS / Linux)
+    ═══════════════════════════════════════════════════════
+         ▸ EDITABLE - TO PUBLISH A NEW VERSION:
+           1) Create the release on GitHub (new tag, e.g. v0.2.0)
+           2) Replace "v0.1.0" with "v0.2.0" in the 3 links below.
+           Format of a direct link:
+           https://github.com/Capture-Moment/CaptureMoment/releases/download/TAG/FILE-NAME
+    ═══════════════════════════════════════════════════════ -->
+    <section id="telecharger" class="relative overflow-hidden py-20 md:py-28">
+      <!-- Decorative halo -->
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div class="absolute left-1/2 top-0 h-72 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-violet-600/10 blur-3xl"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400" data-i18n="dl.eyebrow">Download</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="dl.title">
+            Get CaptureMoment in one click
+          </h2>
+          <p class="reveal mt-5 leading-relaxed text-slate-400 md:text-lg">
+            <span data-i18n="dl.intro">Free software. Latest version:</span>
+            <span class="inline-flex items-center gap-1 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-2 py-0.5 font-mono text-sm text-indigo-300">v0.1.0</span>
+          </p>
+        </div>
+
+        <!-- Download cards per system -->
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+
+          <!-- ── Windows ── -->
+          <article class="reveal group rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/15">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/25 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="app-window" class="h-7 w-7"></i>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-semibold text-white">Windows</h3>
+            <p class="mt-1 text-sm text-slate-400" data-i18n="dl.winSub">Windows 10 and 11 (64-bit)</p>
+            <p class="mt-3 inline-block rounded-lg bg-white/5 px-3 py-1 font-mono text-xs text-slate-500">CaptureMoment-win64.exe</p>
+            <!-- ▸ Direct link to the release file -->
+            <a href="https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment-win64.exe"
+               class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-3 font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:from-indigo-500 hover:to-violet-500 hover:shadow-indigo-500/45">
+              <i data-lucide="download" class="h-5 w-5"></i>
+              <span data-i18n="dl.winBtn">Download for Windows</span>
+            </a>
+          </article>
+
+          <!-- ── macOS ── -->
+          <article class="reveal group rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-sky-500/40 hover:shadow-2xl hover:shadow-sky-500/15">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/25 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="apple" class="h-7 w-7"></i>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-semibold text-white">macOS</h3>
+            <p class="mt-1 text-sm text-slate-400" data-i18n="dl.macSub">Installer for Mac</p>
+            <p class="mt-3 inline-block rounded-lg bg-white/5 px-3 py-1 font-mono text-xs text-slate-500">CaptureMoment.dmg</p>
+            <!-- ▸ Direct link to the release file -->
+            <a href="https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment.dmg"
+               class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 px-5 py-3 font-semibold text-white shadow-lg shadow-sky-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:from-sky-500 hover:to-blue-500 hover:shadow-sky-500/45">
+              <i data-lucide="download" class="h-5 w-5"></i>
+              <span data-i18n="dl.macBtn">Download for macOS</span>
+            </a>
+          </article>
+
+          <!-- ── Linux ── -->
+          <article class="reveal group rounded-3xl border border-white/10 bg-white/[0.03] p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-amber-500/40 hover:shadow-2xl hover:shadow-amber-500/15">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/25 transition-transform duration-300 group-hover:scale-110">
+              <i data-lucide="terminal" class="h-7 w-7"></i>
+            </div>
+            <h3 class="mt-5 font-display text-xl font-semibold text-white">Linux</h3>
+            <p class="mt-1 text-sm text-slate-400" data-i18n="dl.linSub">Standalone file, no installation needed</p>
+            <p class="mt-3 inline-block rounded-lg bg-white/5 px-3 py-1 font-mono text-xs text-slate-500">CaptureMoment-x86_64.AppImage</p>
+            <!-- ▸ Direct link to the release file -->
+            <a href="https://github.com/Capture-Moment/CaptureMoment/releases/download/v0.1.0/CaptureMoment-x86_64.AppImage"
+               class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 px-5 py-3 font-semibold text-white shadow-lg shadow-amber-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:from-amber-500 hover:to-orange-500 hover:shadow-amber-500/45">
+              <i data-lucide="download" class="h-5 w-5"></i>
+              <span data-i18n="dl.linBtn">Download for Linux</span>
+            </a>
+          </article>
+        </div>
+
+        <!-- Help below the cards -->
+        <div class="reveal mt-10 space-y-3 text-center">
+          <p class="text-sm text-slate-500">
+            <span data-i18n="dl.help1">Trouble installing?</span>
+            <a href="#contact" class="font-medium text-indigo-400 underline underline-offset-4 transition hover:text-indigo-300" data-i18n="dl.help2">Write to us</a><span data-i18n="dl.help3">, we will get back to you quickly.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         9. CONTACT - direct links + form
+    ═══════════════════════════════════════════════════════ -->
+    <section id="contact" class="relative py-20 md:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-3xl text-center">
+          <p class="reveal text-xs font-semibold uppercase tracking-[0.3em] text-indigo-400">Contact</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl" data-i18n="contact.title">
+            A question? Write to us
+          </h2>
+          <p class="reveal mt-5 leading-relaxed text-slate-400 md:text-lg" data-i18n="contact.sub">
+            The CaptureMoment team reads every message: questions, ideas, feedback
+            or just saying hi, everything is welcome.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-10 lg:grid-cols-5">
+
+          <!-- ─── Left column: direct links (EDITABLE) ─── -->
+          <div class="space-y-4 lg:col-span-2">
+            <a href="mailto:yacine.benaffane@gmail.com" class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/10">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/20 transition-transform duration-300 group-hover:scale-110">
+                <i data-lucide="mail" class="h-5 w-5"></i>
+              </span>
+              <span class="min-w-0">
+                <span class="block text-sm font-semibold text-white">E-mail</span>
+                <span class="block truncate text-sm text-slate-400">yacine.benaffane@gmail.com</span>
+              </span>
+            </a>
+
+            <a href="https://www.linkedin.com/company/capture-moment" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/40 hover:shadow-xl hover:shadow-sky-500/10">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </span>
+              <span class="min-w-0">
+                <span class="block text-sm font-semibold text-white">LinkedIn</span>
+                <span class="block truncate text-sm text-slate-400">Capture Moment</span>
+              </span>
+            </a>
+
+            <a href="https://github.com/Capture-Moment/CaptureMoment" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20 transition-transform duration-300 group-hover:scale-110">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-5 w-5 shrink-0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              </span>
+              <span class="min-w-0">
+                <span class="block text-sm font-semibold text-white">GitHub</span>
+                <span class="block truncate text-sm text-slate-400">Capture-Moment/CaptureMoment</span>
+              </span>
+            </a>
+          </div>
+
+          <!-- ─── Right column: contact form ─── -->
+          <!-- ═══ FORM - EDITABLE ═══
+               The form uses FormSubmit: a FREE service, no sign-up needed.
+               ACTIVATION (only once):
+                 1) Put the site online, then send the form once yourself;
+                 2) You will receive a confirmation email at yacine.benaffane@gmail.com;
+                 3) Click the "Activate" link in that email. That's it.
+               Afterwards, every message from the site lands directly in your inbox.
+               100% EXTERNAL-SERVICE-FREE ALTERNATIVE: replace the value of "action"
+               below with "mailto:yacine.benaffane@gmail.com"
+               (the visitor's mail software will open with a pre-filled message). -->
+          <div class="lg:col-span-3">
+            <form id="formulaire-contact" action="https://formsubmit.co/yacine.benaffane@gmail.com" method="POST"
+                  class="rounded-3xl border border-white/10 bg-carte/70 p-6 shadow-2xl shadow-indigo-500/10 md:p-8">
+
+              <!-- FormSubmit technical fields (do not modify) -->
+              <input type="hidden" name="_subject" value="New message from the CaptureMoment website" data-i18n-value="form.subject">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_template" value="table">
+              <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label for="champ-nom" class="mb-2 block text-sm font-medium text-slate-300" data-i18n="form.labelName">Name</label>
+                  <input id="champ-nom" name="nom" type="text" required placeholder="Your name" data-i18n-placeholder="form.phName"
+                         class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-200 placeholder-slate-500 transition focus:border-indigo-500/60 focus:outline-none focus:ring-2 focus:ring-indigo-500/40">
+                </div>
+                <div>
+                  <label for="champ-email" class="mb-2 block text-sm font-medium text-slate-300">E-mail</label>
+                  <input id="champ-email" name="email" type="email" required placeholder="you@example.com" data-i18n-placeholder="form.phEmail"
+                         class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-200 placeholder-slate-500 transition focus:border-indigo-500/60 focus:outline-none focus:ring-2 focus:ring-indigo-500/40">
+                </div>
+              </div>
+
+              <div class="mt-5">
+                <label for="champ-message" class="mb-2 block text-sm font-medium text-slate-300" data-i18n="form.labelMessage">Message</label>
+                <textarea id="champ-message" name="message" rows="5" required placeholder="Your question, your suggestion, your feedback…" data-i18n-placeholder="form.phMessage"
+                          class="w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-slate-200 placeholder-slate-500 transition focus:border-indigo-500/60 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"></textarea>
+              </div>
+
+              <div class="mt-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-7 py-3 font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:from-indigo-500 hover:to-violet-500 hover:shadow-indigo-500/45">
+                  <i data-lucide="send" class="h-5 w-5"></i>
+                  <span data-i18n="form.send">Send message</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════
+       10. FOOTER - bottom of the page
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="border-t border-white/5 bg-black/30">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="grid gap-10 md:grid-cols-3">
+
+        <!-- Brand -->
+        <div>
+          <a href="#hero" class="flex items-center gap-3">
+            <img src="asset/logo.png" alt="Capture Moment logo" width="36" height="36"
+                 class="h-9 w-9 rounded-xl object-cover ring-1 ring-white/10"
+                 onerror="this.style.display='none'">
+            <span class="font-display text-lg font-semibold tracking-tight text-white">Capture <span class="texte-degrade">Moment</span></span>
+          </a>
+          <p class="mt-4 text-sm italic text-slate-500">&ldquo;A photographic moment, captured freely.&rdquo;</p>
+          <p class="mt-3 text-xs leading-relaxed text-slate-600">
+            <span data-i18n="footer.lic1">Free software released under the</span>
+            <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer" class="text-indigo-400 transition hover:text-indigo-300">GNU GPL v3</a><span data-i18n="footer.lic3"> license.</span>
+          </p>
+        </div>
+
+        <!-- Quick navigation -->
+        <nav aria-label="Footer">
+          <h3 class="font-display text-sm font-semibold uppercase tracking-wider text-slate-300" data-i18n="footer.navTitle">Navigation</h3>
+          <ul class="mt-4 space-y-2.5 text-sm text-slate-500">
+            <li><a href="#apropos" data-i18n="nav.about" class="transition hover:text-indigo-300">About</a></li>
+            <li><a href="#fonctionnalites" data-i18n="nav.features" class="transition hover:text-indigo-300">Features</a></li>
+            <li><a href="#galerie" data-i18n="nav.gallery" class="transition hover:text-indigo-300">Gallery</a></li>
+            <li><a href="#telecharger" data-i18n="nav.download" class="transition hover:text-indigo-300">Download</a></li>
+            <li><a href="#contact" data-i18n="nav.contact" class="transition hover:text-indigo-300">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Follow the project -->
+        <div>
+          <h3 class="font-display text-sm font-semibold uppercase tracking-wider text-slate-300" data-i18n="footer.followTitle">Follow the project</h3>
+          <ul class="mt-4 space-y-2.5 text-sm text-slate-500">
+            <li>
+              <a href="https://github.com/Capture-Moment/CaptureMoment" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 transition hover:text-indigo-300">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4 shrink-0"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg> GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/capture-moment" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 transition hover:text-sky-300">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4 shrink-0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn
+              </a>
+            </li>
+            <li>
+              <a href="mailto:yacine.benaffane@gmail.com" class="inline-flex items-center gap-2 transition hover:text-violet-300">
+                <i data-lucide="mail" class="h-4 w-4"></i> E-mail
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Final line -->
+      <div class="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-slate-600 sm:flex-row">
+        <!-- ▸ EDITABLE: copyright year -->
+        <p data-i18n="footer.rights">© 2025 Capture Moment. All rights reserved.</p>
+        <p data-i18n="footer.madeWith">Made with passion, for photographers.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+       11. SCRIPTS - Vanilla JS only (no framework)
+  ═══════════════════════════════════════════════════════ -->
+
+  <!-- Lucide icons (CDN): turns <i data-lucide="..."> into SVG.
+       NOTE: the GitHub and LinkedIn logos are SVGs embedded directly
+       in the HTML (brand icons were removed from the Lucide library -
+       inline SVG is more reliable and lighter). -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      /* ────────────────────────────────────────────────
+         ★ 0) LANGUAGES (EN / FR) - ALL THE TEXTS OF THE SITE
+         This is the only place where you edit the wording:
+         change a sentence here and it updates everywhere.
+         Each key (e.g. "hero.title1") matches an element in the
+         page marked with data-i18n="hero.title1".
+         Default language of the page: English (the HTML itself).
+      ──────────────────────────────────────────────── */
+      var TRANSLATIONS = {
+
+        /* ── FRENCH ── */
+        fr: {
+          "a11y.skip": "Aller au contenu",
+          "a11y.nav": "Navigation principale",
+          "a11y.lang": "Langue",
+          "a11y.menuOpen": "Ouvrir le menu",
+          "a11y.menuClose": "Fermer le menu",
+          "nav.about": "À propos",
+          "nav.features": "Fonctionnalités",
+          "nav.gallery": "Galerie",
+          "nav.contact": "Contact",
+          "nav.download": "Télécharger",
+          "nav.downloadFree": "Télécharger gratuitement",
+          "hero.badge": "Logiciel libre & open-source",
+          "hero.title1": "Retouchez vos photos,",
+          "hero.title2": "sans jamais les altérer.",
+          "hero.intro": "CaptureMoment est un logiciel libre de développement et de retouche photo. Vos fichiers originaux restent intacts, vos couleurs restent fidèles et votre bibliothèque reste organisée, en toute simplicité, sur Windows, macOS et Linux.",
+          "hero.ctaGithub": "Découvrir sur GitHub",
+          "about.eyebrow": "À propos du projet",
+          "about.title": "Une alternative libre, pensée par des passionnés",
+          "about.text": "Développé en open-source et distribué gratuitement sous licence GPLv3, le logiciel s'adresse autant aux photographes passionnés qu'aux professionnels : ouvrez vos fichiers RAW, laissez le catalogue organiser votre bibliothèque et profitez de couleurs d'une grande fidélité. Simple à utiliser, puissant sous le capot.",
+          "about.p1t": "Non destructif",
+          "about.p1d": "L'original n'est jamais touché. Chaque retouche reste réversible, à tout moment.",
+          "about.p2t": "Rapide & fluide",
+          "about.p2d": "Les calculs sont accélérés par votre matériel pour un rendu quasi instantané, même sur de très grandes photos.",
+          "about.p3t": "Gratuit & libre",
+          "about.p3d": "Open-source sous licence GPLv3 : utilisez-le sans limite, sans abonnement ni publicité.",
+          "preview.eyebrow": "Aperçu",
+          "preview.title": "Une interface claire, qui laisse toute la place à vos images",
+          "preview.sub": "Vos photos au centre, vos outils à portée de main.",
+          "preview.alt": "Capture d'écran de l'interface principale de CaptureMoment",
+          "preview.placeholder": "Placez ta capture d'écran ici : asset/home.jpg",
+          "preview.caption": "La fenêtre principale de CaptureMoment.",
+          "feat.eyebrow": "Fonctionnalités",
+          "feat.title": "Tout ce qu'il faut, rien de compliqué",
+          "feat.sub": "Des outils puissants, présentés simplement.",
+          "feat.c1t": "Fichiers RAW universels",
+          "feat.c1d": "Ouvrez directement les fichiers de tous les grands constructeurs : Canon, Nikon, Sony, Fujifilm et bien d'autres, sans aucune conversion.",
+          "feat.c2t": "Retouche 100 % réversible",
+          "feat.c2d": "Luminosité, contraste, netteté, réduction du bruit… Ajustez librement : votre original, lui, ne bouge jamais.",
+          "feat.c3t": "Bibliothèque",
+          "feat.c3d": "Vos photos réunies et bien rangées, au même endroit.",
+          "feat.c4t": "Couleurs fidèles",
+          "feat.c4d": "Une gestion des couleurs de niveau professionnel, pour un rendu constant de l'écran jusqu'à l'impression.",
+          "feat.c5t": "Interface moderne",
+          "feat.c5d": "Fluide et élégante, elle s'efface devant l'essentiel : vos photos.",
+          "feat.c6t": "Partout avec vous",
+          "feat.c6d": "Windows, macOS et Linux dès aujourd'hui. Une version mobile est en préparation.",
+          "feat.evolving": "Le projet évolue en continu :",
+          "feat.evolvingLink": "suivez les nouveautés sur GitHub",
+          "gal.eyebrow": "Galerie",
+          "gal.title": "Des instants capturés… et révélés",
+          "gal.sub": "Parce qu'au bout du compte, tout commence par un beau moment.",
+          "gal.a1": "Montagnes au crépuscule",
+          "gal.c1": "Cimes au crépuscule",
+          "gal.a2": "Sous-bois baigné de lumière",
+          "gal.c2": "Sous-bois lumineux",
+          "gal.a3": "Collines dans la brume du matin",
+          "gal.c3": "Brumes d'aube",
+          "gal.a4": "Appareil photo posé sur un bureau",
+          "gal.c4": "L'atelier du photographe",
+          "gal.a5": "Photographe en pleine rue",
+          "gal.c5": "Instants urbains",
+          "gal.a6": "Moments partagés entre amis",
+          "gal.c6": "Moments partagés",
+          "dl.eyebrow": "Télécharger",
+          "dl.title": "Récupérez CaptureMoment en un clic",
+          "dl.intro": "Logiciel libre. Dernière version :",
+          "dl.winSub": "Windows 10 et 11 (64 bits)",
+          "dl.winBtn": "Télécharger pour Windows",
+          "dl.macSub": "Fichier d'installation pour Mac",
+          "dl.macBtn": "Télécharger pour macOS",
+          "dl.linSub": "Fichier autonome, aucune installation requise",
+          "dl.linBtn": "Télécharger pour Linux",
+          "dl.help1": "Un souci pour installer ?",
+          "dl.help2": "Écrivez-nous",
+          "dl.help3": ", on vous répondra vite.",
+          "contact.title": "Une question ? Écrivez-nous",
+          "contact.sub": "L'équipe CaptureMoment lit tous les messages : questions, idées, retours d'expérience ou simples bonjours, tout est bienvenu.",
+          "form.subject": "Nouveau message depuis le site CaptureMoment",
+          "form.labelName": "Nom",
+          "form.phName": "Ton nom",
+          "form.phEmail": "toi@exemple.com",
+          "form.labelMessage": "Message",
+          "form.phMessage": "Ta question, ta suggestion, ton retour…",
+          "form.send": "Envoyer le message",
+          "footer.lic1": "Logiciel libre distribué sous licence ",
+          "footer.lic3": ".",
+          "footer.navTitle": "Navigation",
+          "footer.followTitle": "Suivre le projet",
+          "footer.rights": "© 2025 Capture Moment. Tous droits réservés.",
+          "footer.madeWith": "Fait avec passion, pour les photographes."
+        },
+
+        /* ── ENGLISH (default) ── */
+        en: {
+          "a11y.skip": "Skip to content",
+          "a11y.nav": "Main navigation",
+          "a11y.lang": "Language",
+          "a11y.menuOpen": "Open menu",
+          "a11y.menuClose": "Close menu",
+          "nav.about": "About",
+          "nav.features": "Features",
+          "nav.gallery": "Gallery",
+          "nav.contact": "Contact",
+          "nav.download": "Download",
+          "nav.downloadFree": "Download for free",
+          "hero.badge": "Free & open-source",
+          "hero.title1": "Edit your photos,",
+          "hero.title2": "without ever altering them.",
+          "hero.intro": "CaptureMoment is a free, open-source photo editing and developing app. Your original files stay untouched, your colors stay true and your library stays organized, simply and effortlessly, on Windows, macOS and Linux.",
+          "hero.ctaGithub": "Explore on GitHub",
+          "about.eyebrow": "About the project",
+          "about.title": "A free alternative, built by passionate photographers",
+          "about.text": "Developed in the open and released under the GPLv3 license, the software suits passionate photographers and professionals alike: open your RAW files, let the catalog keep your library organized and enjoy truly faithful colors. Simple to use, powerful under the hood.",
+          "about.p1t": "Non-destructive",
+          "about.p1d": "The original is never touched. Every edit stays reversible at any moment.",
+          "about.p2t": "Fast & fluid",
+          "about.p2d": "Processing is accelerated by your own hardware for near-instant results, even on very large photos.",
+          "about.p3t": "Free & open",
+          "about.p3d": "Open-source under the GPLv3 license: use it without limits, with no subscription and no ads.",
+          "preview.eyebrow": "Preview",
+          "preview.title": "A clean interface that gives your images all the room",
+          "preview.sub": "Your photos front and center, your tools within reach.",
+          "preview.alt": "Screenshot of the CaptureMoment main interface",
+          "preview.placeholder": "Put your screenshot here: asset/home.jpg",
+          "preview.caption": "The main window of CaptureMoment.",
+          "feat.eyebrow": "Features",
+          "feat.title": "Everything you need, nothing complicated",
+          "feat.sub": "Powerful tools, presented simply.",
+          "feat.c1t": "Universal RAW files",
+          "feat.c1d": "Open files from all the major brands directly: Canon, Nikon, Sony, Fujifilm and many more, with no conversion step.",
+          "feat.c2t": "100% reversible editing",
+          "feat.c2d": "Brightness, contrast, sharpness, noise reduction… Adjust freely: your original never changes.",
+          "feat.c3t": "Library",
+          "feat.c3d": "Your photos gathered and neatly organized, all in one place.",
+          "feat.c4t": "Faithful colors",
+          "feat.c4d": "Professional-grade color management, for consistent rendering from screen to print.",
+          "feat.c5t": "Modern interface",
+          "feat.c5d": "Smooth and elegant, it steps aside for what matters: your photos.",
+          "feat.c6t": "With you everywhere",
+          "feat.c6d": "Windows, macOS and Linux today. A mobile version is on the way.",
+          "feat.evolving": "The project keeps evolving:",
+          "feat.evolvingLink": "follow the news on GitHub",
+          "gal.eyebrow": "Gallery",
+          "gal.title": "Moments captured… and revealed",
+          "gal.sub": "Because in the end, it all starts with a beautiful moment.",
+          "gal.a1": "Mountains at dusk",
+          "gal.c1": "Peaks at dusk",
+          "gal.a2": "Forest bathed in light",
+          "gal.c2": "Sunlit woods",
+          "gal.a3": "Hills in the morning mist",
+          "gal.c3": "Dawn mists",
+          "gal.a4": "Camera resting on a desk",
+          "gal.c4": "The photographer's desk",
+          "gal.a5": "Photographer out in the street",
+          "gal.c5": "Urban moments",
+          "gal.a6": "Moments shared with friends",
+          "gal.c6": "Shared moments",
+          "dl.eyebrow": "Download",
+          "dl.title": "Get CaptureMoment in one click",
+          "dl.intro": "Free software. Latest version:",
+          "dl.winSub": "Windows 10 and 11 (64-bit)",
+          "dl.winBtn": "Download for Windows",
+          "dl.macSub": "Installer for Mac",
+          "dl.macBtn": "Download for macOS",
+          "dl.linSub": "Standalone file, no installation needed",
+          "dl.linBtn": "Download for Linux",
+          "dl.help1": "Trouble installing?",
+          "dl.help2": "Write to us",
+          "dl.help3": ", we will get back to you quickly.",
+          "contact.title": "A question? Write to us",
+          "contact.sub": "The CaptureMoment team reads every message: questions, ideas, feedback or just saying hi, everything is welcome.",
+          "form.subject": "New message from the CaptureMoment website",
+          "form.labelName": "Name",
+          "form.phName": "Your name",
+          "form.phEmail": "you@example.com",
+          "form.labelMessage": "Message",
+          "form.phMessage": "Your question, your suggestion, your feedback…",
+          "form.send": "Send message",
+          "footer.lic1": "Free software released under the ",
+          "footer.lic3": " license.",
+          "footer.navTitle": "Navigation",
+          "footer.followTitle": "Follow the project",
+          "footer.rights": "© 2025 Capture Moment. All rights reserved.",
+          "footer.madeWith": "Made with passion, for photographers."
+        }
+      };
+
+      /* Applies a language to the whole page (texts, placeholders,
+         alt attributes, aria-labels, hidden form subject, buttons). */
+      function applyLang(lang) {
+        var dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var v = dict[el.getAttribute('data-i18n')];
+          if (typeof v === 'string') { el.textContent = v; }
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+          var v = dict[el.getAttribute('data-i18n-placeholder')];
+          if (typeof v === 'string') { el.setAttribute('placeholder', v); }
+        });
+        document.querySelectorAll('[data-i18n-value]').forEach(function (el) {
+          var v = dict[el.getAttribute('data-i18n-value')];
+          if (typeof v === 'string') { el.value = v; }
+        });
+        document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+          var v = dict[el.getAttribute('data-i18n-aria')];
+          if (typeof v === 'string') { el.setAttribute('aria-label', v); }
+        });
+        document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+          var v = dict[el.getAttribute('data-i18n-alt')];
+          if (typeof v === 'string') { el.setAttribute('alt', v); }
+        });
+
+        /* Highlights the active EN / FR button */
+        document.querySelectorAll('.lang-btn').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+        });
+
+        /* Remembers the choice for the next visit */
+        try { localStorage.setItem('cm-lang', lang); } catch (e) { /* private mode */ }
+      }
+
+      try {
+        document.querySelectorAll('.lang-btn').forEach(function (b) {
+          b.addEventListener('click', function () {
+            applyLang(b.getAttribute('data-lang'));
+          });
+        });
+        /* Restores the language chosen during a previous visit */
+        var savedLang = null;
+        try { savedLang = localStorage.getItem('cm-lang'); } catch (e) { /* private mode */ }
+        if (savedLang && TRANSLATIONS[savedLang]) { applyLang(savedLang); }
+      } catch (e) { /* switcher unavailable: the site stays in English */ }
+
+      /* ────────────────────────────────────────────────
+         1) SOFT FADE-IN OF SECTIONS while scrolling
+         Configured FIRST: content must never stay
+         invisible, even if another script fails.
+      ──────────────────────────────────────────────── */
+      try {
+        var revealElements = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('est-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px 60px 0px' });
+          revealElements.forEach(function (el) { observer.observe(el); });
+        } else {
+          /* Old browser: everything is visible right away */
+          revealElements.forEach(function (el) { el.classList.add('est-visible'); });
+        }
+      } catch (e) {
+        /* Maximum safety: show everything if the observer fails */
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          el.classList.add('est-visible');
+        });
+      }
+
+      /* ────────────────────────────────────────────────
+         2) LUCIDE ICONS - turns <i data-lucide> into SVG
+      ──────────────────────────────────────────────── */
+      try {
+        if (window.lucide) { lucide.createIcons(); }
+      } catch (e) { /* icons missing: the site remains fully usable */ }
+
+      /* ────────────────────────────────────────────────
+         3) MOBILE MENU - open / close
+      ──────────────────────────────────────────────── */
+      try {
+        var menuButton  = document.getElementById('bouton-menu');
+        var mobileMenu  = document.getElementById('menu-mobile');
+        var iconOpen    = document.getElementById('icone-ouvrir');
+        var iconClose   = document.getElementById('icone-fermer');
+
+        function toggleMenu(forceClose) {
+          var isOpen = !mobileMenu.classList.contains('hidden');
+          var newState = forceClose ? false : !isOpen;
+          mobileMenu.classList.toggle('hidden', !newState);
+          iconOpen.classList.toggle('hidden', newState);
+          iconOpen.classList.toggle('block', !newState);
+          iconClose.classList.toggle('hidden', !newState);
+          iconClose.classList.toggle('block', newState);
+          menuButton.setAttribute('aria-expanded', String(newState));
+          /* Label depends on the current language of the page */
+          var dict = TRANSLATIONS[document.documentElement.lang] || TRANSLATIONS.en;
+          menuButton.setAttribute('aria-label', newState ? dict["a11y.menuClose"] : dict["a11y.menuOpen"]);
+        }
+
+        menuButton.addEventListener('click', function () { toggleMenu(false); });
+        /* Closes the menu when clicking a link inside the panel */
+        mobileMenu.addEventListener('click', function (e) {
+          if (e.target.closest('a')) { toggleMenu(true); }
+        });
+      } catch (e) { /* menu disabled without breaking the rest of the site */ }
+
+      /* ────────────────────────────────────────────────
+         4) NAVBAR - shadow as soon as the page scrolls
+      ──────────────────────────────────────────────── */
+      try {
+        var navbar = document.getElementById('navbar');
+        function updateNavbar() {
+          navbar.classList.toggle('scrolled', window.scrollY > 10);
+        }
+        window.addEventListener('scroll', updateNavbar, { passive: true });
+        updateNavbar();
+      } catch (e) { /* silent degradation */ }
+    })();
+  </script>
+</body>
+</html>
