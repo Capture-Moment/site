@@ -9,7 +9,7 @@
     2.  NAVBAR     → fixed navigation + mobile menu + EN/FR switcher
     3.  HERO       → home, slogan, main buttons
     4.  ABOUT      → project presentation + 3 pillars
-    5.  PREVIEW    → software screenshot (asset/home.png)
+    5.  PREVIEW    → software screenshot (asset/img/home.png)
     6.  FEATURES   → 6 cards with colored icons
     7.  GALLERY    → sample photos (Unsplash placeholders)
     8.  DOWNLOAD   → latest release: Windows / macOS / Linux
@@ -17,6 +17,7 @@
     10. FOOTER     → bottom of the page
     11. SCRIPTS    → Vanilla JS (mobile menu, navbar, animations, icons,
                      and the EN/FR translations of every text on the site)
+    12. CHAT WIDGET → AI assistant, bottom right (logic: asset/chat-ui.js)
 ───────────────────────────────────────────────────────────────────────────────
   HOW THIS FILE IS ORGANIZED:
     • Comments marked "EDITABLE" show what you can safely change
@@ -50,8 +51,8 @@
   <link rel="canonical" href="https://github.com/Capture-Moment/CaptureMoment">
 
   <!-- ─── Favicon & Apple icon (files in the asset/ folder) ─── -->
-  <link rel="icon" type="image/png" href="asset/favicon.png">
-  <link rel="apple-touch-icon" href="asset/favicon.png">
+  <link rel="icon" type="image/png" href="asset/img/favicon.png">
+  <link rel="apple-touch-icon" href="asset/img/favicon.png">
 
   <!-- ─── Open Graph & Twitter Card (preview when the link is shared) ─── -->
   <meta property="og:site_name" content="Capture Moment">
@@ -59,14 +60,14 @@
   <meta property="og:title" content="CaptureMoment - Non-destructive photo editing, free &amp; open-source">
   <meta property="og:description" content="RAW processing, organized library, faithful colors. Free for Windows, macOS and Linux.">
   <meta property="og:url" content="https://github.com/Capture-Moment/CaptureMoment">
-  <!-- EDITABLE: put the ABSOLUTE URL of the share image once online (e.g. https://your-site.com/asset/home.jpg) -->
-  <meta property="og:image" content="asset/home.jpg">
+  <!-- EDITABLE: put the ABSOLUTE URL of the share image once online (e.g. https://your-site.com/asset/img/home.jpg) -->
+  <meta property="og:image" content="asset/img/home.jpg">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CaptureMoment - Non-destructive photo editing, free &amp; open-source">
   <meta name="twitter:description" content="RAW processing, organized library, faithful colors. Free for Windows, macOS and Linux.">
-  <meta name="twitter:image" content="asset/home.jpg">
+  <meta name="twitter:image" content="asset/img/home.jpg">
 
   <!-- ─── Structured data JSON-LD (Google referencing) ─── -->
   <script type="application/ld+json">
@@ -77,7 +78,7 @@
         "@type": "Organization",
         "name": "Capture Moment",
         "url": "https://github.com/Capture-Moment/",
-        "logo": "asset/logo.png",
+        "logo": "asset/img/logo.png",
         "email": "yacine.benaffane@gmail.com",
         "sameAs": [
           "https://github.com/Capture-Moment/",
@@ -188,6 +189,295 @@
     @media print {
       .reveal { opacity: 1 !important; transform: none !important; }
     }
+
+    /* ═══════════════ AI Chat Widget (bottom right) ═══════════════
+       Dark theme: same gradients (indigo 600 → violet 600), same
+       backgrounds (nuit #07070f, carte #0d0d1b) and same fonts as
+       the rest of the site. */
+
+    #chat-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 60;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    #chat-fab:hover { transform: scale(1.1); }
+
+    #chat-fab .icon-close { display: none; }
+    #chat-fab.open .icon-chat { display: none; }
+    #chat-fab.open .icon-close { display: block; }
+
+    @keyframes chat-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.5); }
+      70% { box-shadow: 0 0 0 16px rgba(79, 70, 229, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+    }
+    #chat-fab:not(.open) { animation: chat-pulse 2.5s infinite; }
+
+    #chat-fab-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: #ef4444;
+      color: white;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #chat-panel {
+      position: fixed;
+      bottom: 6rem;
+      right: 1.5rem;
+      z-index: 60;
+      width: min(24rem, calc(100vw - 2rem));
+      height: min(36rem, calc(100vh - 8rem));
+      background: #0d0d1b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 44px -18px rgba(99, 102, 241, 0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform-origin: bottom right;
+      transform: scale(0.9) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    }
+
+    #chat-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #chat-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      color: white;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    #chat-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #chat-header h3 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.2;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #chat-header p {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .status-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: dot-blink 2s infinite;
+    }
+
+    @keyframes dot-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #07070f;
+    }
+
+    #chat-messages::-webkit-scrollbar { width: 8px; }
+    #chat-messages::-webkit-scrollbar-track { background: #07070f; }
+    #chat-messages::-webkit-scrollbar-thumb { background: #26264a; border-radius: 8px; }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 0.75rem 1rem;
+      border-radius: 1.25rem;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      animation: msg-in 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      overflow-wrap: anywhere;
+    }
+
+    .chat-msg.bot {
+      align-self: flex-start;
+      background: #14142a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      border-bottom-left-radius: 0.375rem;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      color: white;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      border-bottom-right-radius: 0.375rem;
+    }
+
+    @keyframes msg-in {
+      from { opacity: 0; transform: translateY(8px) scale(0.97); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .chat-msg.streaming::after {
+      content: "▍";
+      animation: blink 1s steps(2) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .typing-dots { display: inline-flex; gap: 0.3rem; padding: 0.2rem 0; }
+
+    .typing-dots span {
+      width: 0.45rem;
+      height: 0.45rem;
+      background: #475569;
+      border-radius: 50%;
+      animation: dot-bounce 1.2s infinite;
+    }
+
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes dot-bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-4px); }
+    }
+
+    .chat-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .chat-chip {
+      padding: 0.4rem 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #a5b4fc;
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .chat-chip:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
+
+    #chat-form {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #0d0d1b;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      background: #07070f;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #chat-input::placeholder { color: #64748b; }
+    #chat-input:focus { border-color: #6366f1; }
+    #chat-input:disabled { background: #0b0b18; color: #64748b; }
+
+    #chat-send {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 9999px;
+      border: none;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    #chat-send:hover { transform: scale(1.05); }
+    #chat-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Rich content inside bubbles */
+    .chat-msg p { margin: 0 0 0.4rem; }
+    .chat-msg p:last-child,
+    .chat-msg ul:last-child { margin-bottom: 0; }
+    .chat-msg ul {
+      margin: 0.25rem 0 0.5rem;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .chat-msg h4 { font-size: 0.9rem; font-weight: 600; margin: 0.3rem 0 0.25rem; color: #e2e8f0; }
+    .chat-msg code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-size: 0.85em;
+      font-family: 'Consolas', 'Menlo', monospace;
+    }
+    .chat-msg.bot a { color: #818cf8; font-weight: 500; text-decoration: underline; }
+
+    /* Reduced motion: the widget stays usable without animations */
+    @media (prefers-reduced-motion: reduce) {
+      #chat-fab:not(.open) { animation: none; }
+      .chat-msg { animation: none; }
+    }
   </style>
 
   <!-- If JavaScript is disabled: everything stays visible -->
@@ -206,7 +496,7 @@
 
       <!-- ▸ EDITABLE: logo + site name -->
       <a href="#hero" class="group flex items-center gap-3">
-        <img src="asset/logo.png" alt="Capture Moment logo" width="40" height="40"
+        <img src="asset/img/logo.png" alt="Capture Moment logo" width="40" height="40"
              class="h-9 w-9 rounded-xl object-cover ring-1 ring-white/10 transition group-hover:ring-indigo-500/50 md:h-10 md:w-10"
              onerror="this.style.display='none'">
         <span class="font-display text-lg font-semibold tracking-tight text-white md:text-xl">Capture <span class="texte-degrade">Moment</span></span>
@@ -387,7 +677,7 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════
-         5. PREVIEW - software screenshot (asset/home.png)
+         5. PREVIEW - software screenshot (asset/img/home.png)
     ═══════════════════════════════════════════════════════ -->
     <section id="apercu" class="relative overflow-hidden py-20 md:py-28">
       <!-- Decorative halo -->
@@ -406,17 +696,17 @@
           </p>
         </div>
 
-        <!-- ▸ EDITABLE: software screenshot (replace asset/home.jpg with your file) -->
+        <!-- ▸ EDITABLE: software screenshot (replace asset/img/home.jpg with your file) -->
         <figure class="reveal mt-12 md:mt-16">
           <div class="group relative rounded-3xl border border-white/10 bg-carte p-2 shadow-2xl shadow-indigo-500/20 transition-all duration-500 hover:shadow-indigo-500/40 md:p-3">
-            <img src="asset/home.jpg"
+            <img src="asset/img/home.jpg"
                  alt="Screenshot of the CaptureMoment main interface" data-i18n-alt="preview.alt"
                  loading="lazy"
                  class="w-full rounded-2xl"
                  onerror="this.classList.add('hidden');document.getElementById('placeholder-apercu').classList.replace('hidden','flex')">
-            <!-- Placeholder shown only if asset/home.png is missing -->
+            <!-- Placeholder shown only if asset/img/home.png is missing -->
             <div id="placeholder-apercu" class="hidden aspect-[16/9] w-full items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600/15 via-carte to-fuchsia-600/10 text-slate-500">
-              <span class="text-sm" data-i18n="preview.placeholder">Put your screenshot here: asset/home.jpg</span>
+              <span class="text-sm" data-i18n="preview.placeholder">Put your screenshot here: asset/img/home.jpg</span>
             </div>
           </div>
           <!-- ▸ EDITABLE: screenshot caption -->
@@ -635,7 +925,7 @@
             <p class="mt-1 text-sm text-slate-400" data-i18n="dl.winSub">Windows 10 and 11 (64-bit)</p>
             <p class="mt-3 inline-block rounded-lg bg-white/5 px-3 py-1 font-mono text-xs text-slate-500">CaptureMoment-win64.exe</p>
             <!-- ▸ Direct link to the release file -->
-            <a href="https://github.com/Capture-Moment/CaptureMoment/releases/download/latest/CaptureMoment-win64.exe"
+            <a href="https://github.com/Capture-Moment/CaptureMoment/releases/latest/download/CaptureMoment-win64.exe"
                class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-3 font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:from-indigo-500 hover:to-violet-500 hover:shadow-indigo-500/45">
               <i data-lucide="download" class="h-5 w-5"></i>
               <span data-i18n="dl.winBtn">Download for Windows</span>
@@ -800,7 +1090,7 @@
         <!-- Brand -->
         <div>
           <a href="#hero" class="flex items-center gap-3">
-            <img src="asset/logo.png" alt="Capture Moment logo" width="36" height="36"
+            <img src="asset/img/logo.png" alt="Capture Moment logo" width="36" height="36"
                  class="h-9 w-9 rounded-xl object-cover ring-1 ring-white/10"
                  onerror="this.style.display='none'">
             <span class="font-display text-lg font-semibold tracking-tight text-white">Capture <span class="texte-degrade">Moment</span></span>
@@ -970,7 +1260,17 @@
           "footer.navTitle": "Navigation",
           "footer.followTitle": "Suivre le projet",
           "footer.rights": "© 2025 Capture Moment. Tous droits réservés.",
-          "footer.madeWith": "Fait avec passion, pour les photographes."
+          "footer.madeWith": "Fait avec passion, pour les photographes.",
+          "chat.open": "Ouvrir le chat IA",
+          "chat.title": "Assistant IA",
+          "chat.status": "Répond sur le projet",
+          "chat.placeholder": "Posez votre question...",
+          "chat.send": "Envoyer",
+          "chat.welcome": "👋 Bonjour ! Je suis l'assistant de CaptureMoment. Posez vos questions sur l'application : fonctionnalités, installation, téléchargement…",
+          "chat.sugg1": "Comment installer CaptureMoment ?",
+          "chat.sugg2": "Quelles sont les fonctionnalités ?",
+          "chat.sugg3": "Quels systèmes sont pris en charge ?",
+          "chat.error": "Désolé, le service est momentanément indisponible. Réessayez dans un instant."
         },
 
         /* ── ENGLISH (default) ── */
@@ -1064,9 +1364,23 @@
           "footer.navTitle": "Navigation",
           "footer.followTitle": "Follow the project",
           "footer.rights": "© 2025 Capture Moment. All rights reserved.",
-          "footer.madeWith": "Made with passion, for photographers."
+          "footer.madeWith": "Made with passion, for photographers.",
+          "chat.open": "Open the AI chat",
+          "chat.title": "AI Assistant",
+          "chat.status": "Answers about the project",
+          "chat.placeholder": "Ask your question...",
+          "chat.send": "Send",
+          "chat.welcome": "👋 Hi there! I'm the CaptureMoment assistant. Ask me anything about the app: features, installation, download…",
+          "chat.sugg1": "How do I install CaptureMoment?",
+          "chat.sugg2": "What are the main features?",
+          "chat.sugg3": "Which systems are supported?",
+          "chat.error": "Sorry, the service is temporarily unavailable. Please try again in a moment."
         }
       };
+
+      /* Exposed for the chat widget (asset/chat-ui.js): it reads the
+         texts of the current language without duplicating them. */
+      window.CM_TRANSLATIONS = TRANSLATIONS;
 
       /* Applies a language to the whole page (texts, placeholders,
          alt attributes, aria-labels, hidden form subject, buttons). */
@@ -1102,6 +1416,10 @@
 
         /* Remembers the choice for the next visit */
         try { localStorage.setItem('cm-lang', lang); } catch (e) { /* private mode */ }
+
+        /* Notifies the chat widget (asset/chat-ui.js) that it must
+           re-render its own texts in the new language. */
+        try { document.dispatchEvent(new CustomEvent('cm:lang', { detail: { lang: lang } })); } catch (e) { /* old browser: widget keeps its language */ }
       }
 
       try {
@@ -1194,5 +1512,42 @@
       } catch (e) { /* silent degradation */ }
     })();
   </script>
+
+  <!-- ═══════════════════════════════════════════════════════
+       12. CHAT WIDGET - AI assistant, bottom right
+       Logic lives in asset/chat-ui.js (it lazily imports
+       asset/chat.js, provided separately). Texts follow the
+       site language (EN/FR).
+       Icons are inline SVG (Lucide, ISC license): they render
+       immediately, even with JavaScript disabled - the chat
+       must not depend on the CDN that draws the other icons.
+  ═══════════════════════════════════════════════════════ -->
+  <button id="chat-fab" type="button" aria-label="Open the AI chat" data-i18n-aria="chat.open">
+    <svg class="icon-chat" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    <span id="chat-fab-badge">1</span>
+  </button>
+
+  <div id="chat-panel" aria-hidden="true">
+    <div id="chat-header">
+      <div id="chat-avatar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div>
+      <div>
+        <h3 data-i18n="chat.title">AI Assistant</h3>
+        <p><span class="status-dot"></span> <span data-i18n="chat.status">Answers about the project</span></p>
+      </div>
+    </div>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Ask your question..." autocomplete="off"
+             maxlength="1000" data-i18n-placeholder="chat.placeholder">
+      <button type="submit" id="chat-send" aria-label="Send" data-i18n-aria="chat.send">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+      </button>
+    </form>
+  </div>
+
+  <!-- Chat UI module: lazily imports asset/chat.js (backend, optional
+       until you deploy it) and asset/markdown.js (optional renderer). -->
+  <script type="module" src="asset/chat-ui.js"></script>
 </body>
 </html>
