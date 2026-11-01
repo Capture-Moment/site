@@ -17,7 +17,7 @@
     10. FOOTER     → bottom of the page
     11. SCRIPTS    → Vanilla JS (mobile menu, navbar, animations, icons,
                      and the EN/FR translations of every text on the site)
-    12. CHAT WIDGET → AI assistant, bottom right (logic: asset/chat-ui.js)
+    12. CHAT WIDGET → AI assistant, bottom right (logic: asset/js/chat-ui.js)
 ───────────────────────────────────────────────────────────────────────────────
   HOW THIS FILE IS ORGANIZED:
     • Comments marked "EDITABLE" show what you can safely change
@@ -1378,7 +1378,7 @@
         }
       };
 
-      /* Exposed for the chat widget (asset/chat-ui.js): it reads the
+      /* Exposed for the chat widget (asset/js/chat-ui.js): it reads the
          texts of the current language without duplicating them. */
       window.CM_TRANSLATIONS = TRANSLATIONS;
 
@@ -1417,7 +1417,7 @@
         /* Remembers the choice for the next visit */
         try { localStorage.setItem('cm-lang', lang); } catch (e) { /* private mode */ }
 
-        /* Notifies the chat widget (asset/chat-ui.js) that it must
+        /* Notifies the chat widget (asset/js/chat-ui.js) that it must
            re-render its own texts in the new language. */
         try { document.dispatchEvent(new CustomEvent('cm:lang', { detail: { lang: lang } })); } catch (e) { /* old browser: widget keeps its language */ }
       }
@@ -1515,8 +1515,8 @@
 
   <!-- ═══════════════════════════════════════════════════════
        12. CHAT WIDGET - AI assistant, bottom right
-       Logic lives in asset/chat-ui.js (it lazily imports
-       asset/chat.js, provided separately). Texts follow the
+       Logic lives in asset/js/chat-ui.js (it lazily imports
+       asset/js/chat.js, provided separately). Texts follow the
        site language (EN/FR).
        Icons are inline SVG (Lucide, ISC license): they render
        immediately, even with JavaScript disabled - the chat
@@ -1546,8 +1546,8 @@
     </form>
   </div>
 
-  <!-- Chat UI module: lazily imports asset/chat.js (backend, optional
-       until you deploy it) and asset/markdown.js (optional renderer). -->
-  <script type="module" src="asset/chat-ui.js"></script>
+  <!-- Chat UI module: lazily imports asset/js/chat.js (backend, optional
+       until you deploy it) and asset/js/markdown.js (optional renderer). -->
+  <script type="module" src="asset/js/chat-ui.js"></script>
 </body>
 </html>

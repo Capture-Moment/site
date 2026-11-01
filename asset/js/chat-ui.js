@@ -8,9 +8,9 @@
  *
  * Optional sibling modules (loaded lazily, the widget degrades
  * gracefully if they are missing):
- *   - asset/chat.js     → export async function sendMessage(question, handlers)
+ *   - asset/js/chat.js     → export async function sendMessage(question, handlers)
  *                         with handlers = { onToken, onError, onDone }
- *   - asset/markdown.js → export function renderMarkdown(text) → HTML string
+ *   - asset/js/markdown.js → export function renderMarkdown(text) → HTML string
  *
  * The widget stays fully usable (open/close, welcome, chips) even before
  * chat.js exists: sending a question then shows a friendly error bubble.
@@ -26,8 +26,8 @@ const sendBtn = document.getElementById("chat-send");
 
 let welcomed = false;          // first open -> bot greets + suggestion chips
 let streaming = false;         // one response at a time
-let chatModule;                // ./chat.js   (undefined = not loaded yet)
-let markdownModule;            // ./markdown.js (null = missing, plain text fallback)
+let chatModule;                // ./js/chat.js   (undefined = not loaded yet)
+let markdownModule;            // ./js/markdown.js (null = missing, plain text fallback)
 let welcomeBubble = null;      // kept to re-render it on language switch
 let chipRefs = [];             // [{ chip, key }] kept for language switch
 
@@ -60,7 +60,7 @@ function escapeHtml(text) {
     .replace(/'/g, "&#39;");
 }
 
-/** HTML string for a bubble. Uses asset/markdown.js when available,
+/** HTML string for a bubble. Uses asset/js/markdown.js when available,
     otherwise a safe plain-text fallback (escaped, line breaks kept). */
 function renderContent(text) {
   if (markdownModule && typeof markdownModule.renderMarkdown === "function") {
@@ -87,7 +87,7 @@ function addBubble(sender, text = "") {
 async function loadMarkdown() {
   if (markdownModule !== undefined) return markdownModule;
   try {
-    markdownModule = await import("./markdown.js");
+    markdownModule = await import("./js/markdown.js");
   } catch {
     markdownModule = null; // plain-text fallback, the chat still works
   }
@@ -96,7 +96,7 @@ async function loadMarkdown() {
 
 async function loadBackend() {
   if (chatModule) return chatModule;
-  chatModule = await import("./chat.js");
+  chatModule = await import("./js/chat.js");
   if (typeof chatModule.sendMessage !== "function") {
     throw new Error("chat.js must export sendMessage()");
   }
