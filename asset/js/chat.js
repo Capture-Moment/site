@@ -13,7 +13,7 @@
 // The page is served by Live Server (:5500), the API runs on :8000,
 const API_URL =  location.hostname === "localhost" || location.hostname === "127.0.0.1"
     ? "http://127.0.0.1:8000/api/chat"
-    : "https://llm-site.vercel.app/api/chat";
+    : "https://capturemoment-llm-site.vercel.app/api/chat";
 
 // Must stay in sync with ChatRequest.history.max_length in rag/schemas.py.
 const MAX_HISTORY = 20;
