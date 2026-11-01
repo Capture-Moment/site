@@ -26,8 +26,8 @@ const sendBtn = document.getElementById("chat-send");
 
 let welcomed = false;          // first open -> bot greets + suggestion chips
 let streaming = false;         // one response at a time
-let chatModule;                // ./js/chat.js   (undefined = not loaded yet)
-let markdownModule;            // ./js/markdown.js (null = missing, plain text fallback)
+let chatModule;                // ./chat.js   (undefined = not loaded yet)
+let markdownModule;            // ./markdown.js (null = missing, plain text fallback)
 let welcomeBubble = null;      // kept to re-render it on language switch
 let chipRefs = [];             // [{ chip, key }] kept for language switch
 
@@ -87,7 +87,7 @@ function addBubble(sender, text = "") {
 async function loadMarkdown() {
   if (markdownModule !== undefined) return markdownModule;
   try {
-    markdownModule = await import("./js/markdown.js");
+    markdownModule = await import("./markdown.js");
   } catch {
     markdownModule = null; // plain-text fallback, the chat still works
   }
@@ -96,7 +96,7 @@ async function loadMarkdown() {
 
 async function loadBackend() {
   if (chatModule) return chatModule;
-  chatModule = await import("./js/chat.js");
+  chatModule = await import("./chat.js");
   if (typeof chatModule.sendMessage !== "function") {
     throw new Error("chat.js must export sendMessage()");
   }
