@@ -40,7 +40,7 @@ async function fetchStream(question) {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: question, history }),
+    body: JSON.stringify({ message: question, history, source: "site" }),
   });
 
   if (!response.ok) {
